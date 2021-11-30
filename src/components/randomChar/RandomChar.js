@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { getCharacter } from '../../api';
 import Spinner from '../spinner/Spinner';
+import Error from '../error/Error';
 
 import './randomChar.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
@@ -25,11 +26,11 @@ class RandomChar extends Component {
 
     updateCharacter = async () => {
         this.setState({
-            isLoading: true
+            isLoading: true,
+            isError: false
         })
 
         const id = Math.floor(Math.random() * (1011400-1011000) + 1011000);
-
         try {
             const result = await getCharacter(id);
             this.setState({
@@ -40,8 +41,6 @@ class RandomChar extends Component {
         catch {
             this.onError();
         }
-    
-     
     } 
 
     onError = () => {
@@ -53,14 +52,16 @@ class RandomChar extends Component {
 
 
     render() {
-        const {char, isLoading} = this.state;
+        const {char, isLoading, isError} = this.state;
         const spinner = isLoading ? <Spinner/> : null;
-        const content = !isLoading ? <View char={char}/> : null;
+        const content = !(isLoading || isError) ? <View char={char}/> : null;
+        const error = isError ? <Error/> : null;
       
         return (
             <div className="randomchar">
                     {spinner}
                     {content}
+                    {error}
 
                 <div className="randomchar__static">
                     <p className="randomchar__title">
