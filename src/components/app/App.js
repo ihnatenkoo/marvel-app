@@ -19,6 +19,15 @@ class App extends Component {
         }
     }
 
+    selectCharHandler = (charId) => {
+        // Проверяем, а выбранный персонаж уже выбран?
+        // Если нет - изменяем состояние
+        if (this.state.activeChar !== charId)
+            this.setState({
+                activeChar: charId,
+            });
+    }
+
     render() {
         const {activeChar} = this.state;
         return (
@@ -27,7 +36,10 @@ class App extends Component {
                 <main>
                     <RandomChar/>
                     <div className="char__content">
-                        <CharList onClickCharList={this.onClickCharList}/>
+                        <CharList
+                            selectCharHandler={this.selectCharHandler}
+                            onClickCharList={this.onClickCharList}
+                        />
                         <CharInfo activeChar={activeChar}/>
                     </div>
                     <img className="bg-decoration" src={decoration} alt="vision"/>
