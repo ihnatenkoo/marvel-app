@@ -12,7 +12,7 @@ async function fetchURL(url) {
 }
 
 function transformData(data) {
-  const {id, name, description, thumbnail, urls} = data;
+  const {id, name, description, thumbnail, urls, comics} = data;
 
   return {
     id,
@@ -20,7 +20,8 @@ function transformData(data) {
     description,
     thumbnail: thumbnail.path + "." + thumbnail.extension,
     wiki: urls[0].url,
-    homepage: urls[1].url
+    homepage: urls[1].url,
+    comics: comics.items.map(item => item.name)
   }
 }
 

@@ -83,9 +83,16 @@ class RandomChar extends Component {
 }
 
 const View = ({char}) => {
-    const {name, description, thumbnail, wiki, homepage} = char;
+    let {name, description, thumbnail, wiki, homepage} = char;
   
-    const descr = description.length > 211 ? `${description.slice(0,211)}...` : description;
+    // const descr = description.length > 211 ? `${description.slice(0,211)}...` : description;
+    if (description.length > 211) {
+        description = `${description.slice(0,211)}...`
+    } else if (description.length == 0) {
+        description = "Description Not Available"
+    } 
+
+
     const imageNA = thumbnail == 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg';
 
      return (
@@ -93,7 +100,7 @@ const View = ({char}) => {
             <img src={thumbnail} alt="Random character" className="randomchar__img" style={imageNA ? {objectFit: 'contain'} : null}/>
             <div className="randomchar__info">
                 <p className="randomchar__name">{name}</p>
-                <p className="randomchar__descr">{descr}</p>
+                <p className="randomchar__descr">{description}</p>
 
                 <div className="randomchar__btns">
                     <a href={homepage} className="button button__main" target="_blank">

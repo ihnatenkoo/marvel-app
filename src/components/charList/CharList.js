@@ -19,7 +19,6 @@ class CharList extends Component {
     }
 
     componentDidMount() {
-        console.log("up")
         this.getCharacters();
     }
 
@@ -55,7 +54,6 @@ class CharList extends Component {
    
 
     render() {
-        console.log("re")
         const {char, isError, isLoading, isEnd} = this.state;
         const charList = char.map((char, i) => <CharItem char={char} key={i}/>);
         const spinner = isLoading ? <Spinner/> : null;

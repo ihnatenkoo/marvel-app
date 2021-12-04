@@ -16,7 +16,6 @@ class App extends Component {
             this.setState({
                 activeChar: event.target.dataset.id
             })
-            console.log(event.target.dataset.id)
         }
     }
 
