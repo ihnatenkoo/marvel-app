@@ -1,14 +1,9 @@
 async function fetchURL(url) {
-  try {
     const response = await fetch(url);
 
     if (response.ok) {
       return await response.json();
     }
-  }
-  catch {
-    console.log("Ошибка загрузки данных...") 
-  }
 }
 
 function transformData(data) {

@@ -11,12 +11,11 @@ class App extends Component {
         activeChar: null
     }
 
-    onClickCharList = (event) => {
-        if (event.target && event.target.classList.contains("char__item")) {
+    selectCharHandler = (charId) => {
+        if (this.state.activeChar !== charId)
             this.setState({
-                activeChar: event.target.dataset.id
-            })
-        }
+                activeChar: charId,
+            });
     }
 
     render() {
@@ -27,7 +26,7 @@ class App extends Component {
                 <main>
                     <RandomChar/>
                     <div className="char__content">
-                        <CharList onClickCharList={this.onClickCharList}/>
+                        <CharList selectCharHandler={this.selectCharHandler}/>
                         <CharInfo activeChar={activeChar}/>
                     </div>
                     <img className="bg-decoration" src={decoration} alt="vision"/>

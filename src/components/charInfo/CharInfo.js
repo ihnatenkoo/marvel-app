@@ -47,7 +47,7 @@ class CharInfo extends Component {
 
     render() {
         let {char, isLoading, isError} = this.state;
-        
+    
         const spinner =  isLoading ? <Spinner/> : null;
         const error = isError ? <Error/> : null;
         const content =  !(isLoading || isError || !char) ? <Content char={char}/> : null;
@@ -67,14 +67,11 @@ class CharInfo extends Component {
 }
 
 const Content = ({char}) => {
-    let {name, description, thumbnail, comics} = char;
-    let comicsList;
-    description = description == "" ? "Description not Available": description;
+    let {name, description, thumbnail, comics, homepage, wiki} = char;
 
-    if (comics && comics.length == 0) {
-        comicsList = "No comics for this character";
-    } else if (comics) {
-        comicsList = comics.map((item,i) => {return (
+    const calculateComicsList = (comicsList) => {
+        if (comics.length === 0) return "No comics for this character";
+        return comicsList.map((item,i) => {return (
             <li className="char__comics-item" key={i}>
                {item}
             </li>
@@ -88,21 +85,21 @@ const Content = ({char}) => {
             <div>
                 <div className="char__info-name">{name}</div>
                 <div className="char__btns">
-                    <a href="#" className="button button__main">
+                    <a href={homepage} className="button button__main" target="_blank" rel="noreferrer">
                         <div className="inner">homepage</div>
                     </a>
-                    <a href="#" className="button button__secondary">
+                    <a href={wiki} className="button button__secondary" target="_blank" rel="noreferrer">
                         <div className="inner">Wiki</div>
                     </a>
                 </div>
             </div>
         </div>
         <div className="char__descr">
-            {description}
+            {description.length === 0 ? "Description not Available": description}
         </div>
         <div className="char__comics">Comics:</div>
         <ul className="char__comics-list">
-            {comicsList}
+            {calculateComicsList(comics)}
         </ul>    
       </> 
     )
