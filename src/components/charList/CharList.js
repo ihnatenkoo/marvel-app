@@ -96,3 +96,5 @@ const CharList = (props) => {
 }
 
 export default CharList;
+
+
