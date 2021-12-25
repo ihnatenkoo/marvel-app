@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getManyCharacters } from '../../api';
+import {useMarvelService} from '../../api/index';
 import CharItem from '../charItem/CharItem';
 import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
@@ -9,6 +9,7 @@ import classNames from 'classnames';
 
 
 const CharList = (props) => {
+    const {getManyCharacters} = useMarvelService();
 
     const [char, setChar] = useState([]);
     const [isLoading, setLoading] = useState(true);
@@ -50,7 +51,6 @@ const CharList = (props) => {
     const itemRefs = useRef([]);
   
     const focusOnItem = (id) => {
-        console.log(id)
       itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
       itemRefs.current[id].classList.add('char__item_selected');
       itemRefs.current[id].focus();

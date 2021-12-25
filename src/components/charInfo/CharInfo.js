@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getCharacter } from '../../api';
+import {useMarvelService} from '../../api/index';
 
 import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
@@ -8,6 +8,7 @@ import './charInfo.scss';
 
 
 const CharInfo = ({activeChar}) => {
+    const {getCharacter} = useMarvelService();
 
     const [char, setChar] = useState(null)
     const [loading, setLoading] = useState(false)
