@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {useMarvelService} from '../../api/index';
+import { useMarvelService } from '../../api/index';
 import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
 
@@ -8,7 +8,7 @@ import mjolnir from '../../resources/img/mjolnir.png';
 
 
 const RandomChar = () => {
-    const {getCharacter} = useMarvelService();
+    const {getCharacter, loading, error, clearError} = useMarvelService();
 
     const [char, setChar] = useState({
         name: null,
@@ -18,34 +18,16 @@ const RandomChar = () => {
         homepage: null
     });
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-
     useEffect(() => {
         updateCharacter()
     }, [])
 
     const updateCharacter = async () => {
-        setLoading(true)
-        setError(false)
-    
+        clearError();
         const id = Math.floor(Math.random() * (1011400-1011000) + 1011000);
-        try {
-            const result = await getCharacter(id);
-            setChar(result);
-            setLoading(false)
-        }
-        catch {
-           onError();
-        }
+        const result = await getCharacter(id);
+        setChar(result);
     } 
-
-    const onError = () => {
-        setLoading(false)
-        setError(true)
-    }
-
-
 
     const spinner = loading ? <Spinner/> : null;
     const content = !(loading || error) ? <View char={char}/> : null;
@@ -56,7 +38,6 @@ const RandomChar = () => {
                 {spinner}
                 {content}
                 {errorMsg}
-
             <div className="randomchar__static">
                 <p className="randomchar__title">
                     Random character for today!<br/>

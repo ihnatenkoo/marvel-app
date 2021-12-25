@@ -8,11 +8,9 @@ import './charInfo.scss';
 
 
 const CharInfo = ({activeChar}) => {
-    const {getCharacter} = useMarvelService();
+    const {getCharacter, loading, error, clearError} = useMarvelService();
 
     const [char, setChar] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
 
     useEffect(() => {
         if (activeChar) {
@@ -22,31 +20,15 @@ const CharInfo = ({activeChar}) => {
 
 
     const setActiveChar = async () => {
-        try {
-            setLoading(true)
-            const char = await getCharacter(activeChar);
-    
-            setLoading(false)
-            setChar(char)
-        }
-
-        catch {
-            onError();
-        }
-     
+        clearError()
+        const char = await getCharacter(activeChar);
+        setChar(char)
     }
-
-    const onError = () => {
-        setLoading(false);
-        setError(true);
-    }
-
     
     const spinner =  loading ? <Spinner/> : null;
     const errorMsg = error ? <Error/> : null;
     const content =  !(loading || error || !char) ? <Content char={char}/> : null;
     const skeleton = !(char || loading || error) ? <Skeleton/> : null;
-
 
     return(
         <div className="char__info">

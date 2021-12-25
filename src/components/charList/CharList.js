@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import {useMarvelService} from '../../api/index';
+import { useMarvelService } from '../../api/index';
 import CharItem from '../charItem/CharItem';
 import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
@@ -9,11 +9,9 @@ import classNames from 'classnames';
 
 
 const CharList = (props) => {
-    const {getManyCharacters} = useMarvelService();
+    const {getManyCharacters, loading, error, clearError} = useMarvelService();
 
     const [char, setChar] = useState([]);
-    const [isLoading, setLoading] = useState(true);
-    const [isError, setError] = useState(false);
     const [offset, setOffset] = useState(301);  // 1549 max offset
     const [isEnd, setEnd] = useState(false);
     const [focus, setFocus] = useState(null);
@@ -28,24 +26,13 @@ const CharList = (props) => {
 
 
     const getCharacters = async () => {
-        setLoading(true)
-        try {
-            const data = await getManyCharacters(offset);
-            if (data.length < 9) setEnd(isEnd => true);
-            const charList = [...char, ...data];
-    
-            setChar(char => charList);
-            setLoading(false);
-            setOffset(offset => offset + 9);
-        }
-        catch {
-            onError();
-        }
-    }
+        clearError();
+        const data = await getManyCharacters(offset);
+        if (data.length < 9) setEnd(isEnd => true);
+        const charList = [...char, ...data];
 
-    const onError = () => {
-        setLoading(false);
-        setError(true);
+        setChar(char => charList);
+        setOffset(offset => offset + 9);
     }
 
     const itemRefs = useRef([]);
@@ -66,16 +53,16 @@ const CharList = (props) => {
 
     
     const charList = char.map((char, i) => 
-            <CharItem 
-                selectCharHandler={props.selectCharHandler} char={char} key={char.id} getRef={getRef} i={i} getActiveFocus={getActiveFocus}
-            />);
-    const spinner = isLoading ? <Spinner/> : null;
-    const error = isError ? <Error/> : null;
-    const content = !(isError) ? charList : null;
+        <CharItem 
+            selectCharHandler={props.selectCharHandler} char={char} key={char.id} getRef={getRef} i={i} getActiveFocus={getActiveFocus}
+        />);
+    const spinner = loading ? <Spinner/> : null;
+    const errorMsg = error ? <Error/> : null;
+    const content = !(error) ? charList : null;
 
     const btnClass = classNames({
         "button button__main button__long": true,
-        "disabled" : isLoading,
+        "disabled" : loading,
         "hide": isEnd
     })
 
@@ -86,8 +73,8 @@ const CharList = (props) => {
                 {content}
             </ul>
             {spinner}
-            {error}
-            <button onClick={getCharacters} className={btnClass} disabled={isLoading ? true : null}>
+            {errorMsg}
+            <button onClick={getCharacters} className={btnClass} disabled={loading ? true : null}>
                 <div className="inner">load more</div>
             </button>
         </div>

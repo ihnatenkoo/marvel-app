@@ -1,8 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 
 export const useHttp = () => {
-  const [isLoading, setLoading] = useState(false);
-  const [isError, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   async function fetchURL(url) {
     setLoading(true);
@@ -27,5 +27,7 @@ export const useHttp = () => {
   
 }
 
-  
+  const clearError = () => setError(null);
+
+  return {loading, error, clearError, fetchURL}
 }
