@@ -3,8 +3,10 @@ import AppHeader from "../appHeader/AppHeader";
 import RandomChar from "../randomChar/RandomChar";
 import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
+import ComicsList from "../ComicsList/ComicsList";
 
 import decoration from '../../resources/img/vision.png';
+import comicsBanner from '../../resources/img/comics-banner.jpg';
 
 const App = () => {
 
@@ -20,6 +22,15 @@ const App = () => {
         <div className="app">
             <AppHeader/>
             <main>
+                <img className="comics-banner" src={comicsBanner} alt="main banner"/>
+                <div className="comics__cntent">
+                    <ComicsList/>
+                </div>
+           
+            
+
+
+
                 <RandomChar/>
                 <div className="char__content">
                     <CharList selectCharHandler={selectCharHandler}/>

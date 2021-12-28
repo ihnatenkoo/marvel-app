@@ -1,0 +1,23 @@
+.comics {
+  &__item {
+    height: 415px;
+  }
+  &__name, &__price {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000;
+  }
+  &__price {
+    margin-bottom: 0;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  &__img {
+    margin-bottom: 10px;
+    width: 225px;
+    height: 346px;
+    object-fit: cover;
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
+  }
+}
