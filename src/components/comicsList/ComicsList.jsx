@@ -33,14 +33,13 @@ useEffect(() => {
  }
 
 
-
  const content = comicsList.map((comics,i) => <ComicsItem comics={comics} key={i}/>);
  const spinner = loading ? <Spinner/> : null;
  const errorMsg = error ? <Error/> : null
 
   return (
-    <>
-      {errorMsg}
+    <div className="comics__content">
+       {errorMsg}
       <ul className="comics__list">
         {content}
       </ul>
@@ -48,8 +47,7 @@ useEffect(() => {
       <button onClick={getComicsList} className={btnClass} disabled={loading ? true : null}>
         <div className="inner">load more</div>
       </button>
-    </>
-    
+    </div>
   )
 }
 

@@ -1,6 +1,10 @@
 .comics {
   &__item {
     height: 415px;
+    transition: .2s linear;
+    &:hover {
+      transform: translateY(-5px);
+    }
   }
   &__name, &__price {
     margin-bottom: 5px;
