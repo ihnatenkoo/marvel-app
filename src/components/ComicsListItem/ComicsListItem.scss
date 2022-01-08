@@ -1,19 +1,21 @@
 .comics {
   &__item {
     height: 415px;
-    transition: .2s linear;
+    transition: transform .2s linear, opacity 800ms linear;
     &:hover {
       transform: translateY(-5px);
     }
   }
-  &__name, &__price {
+  &__name, &__prices {
     margin-bottom: 5px;
     font-weight: bold;
     font-size: 14px;
     line-height: 16px;
     color: #000;
   }
-  &__price {
+  &__prices {
+    display: flex;
+    flex-wrap: wrap;
     margin-bottom: 0;
     color: rgba(0, 0, 0, 0.6);
   }
@@ -24,4 +26,8 @@
     object-fit: cover;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
   }
+  &__print__price {
+    margin-right: 15px;
+  }
 }
+

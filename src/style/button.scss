@@ -51,6 +51,25 @@
             transition: none;
         }
     }
+
+    &__buy__comics {
+        display: block;
+        padding: 10px 15px;
+        border: 2px solid #9F0013;
+        border-radius: 7px;
+        text-transform: uppercase;
+        background-color: #ece8e8;
+        color: #9F0013;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all .1s linear;
+        &:hover {
+            background-color: #9F0013;
+            color: #fff;
+        }
+    }
+
     &__main, &__secondary {
         &:hover {
             color: #fff;
@@ -95,3 +114,5 @@
         transform: translateY(-5px);
     }
 }
+
+

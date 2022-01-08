@@ -1,6 +1,17 @@
 .error {
-  margin: 0 auto;
-  max-height: 260px;
-  width: auto;
-  display: block;
+  &__img {
+    margin: 0 auto;
+    max-height: 260px;
+    width: auto;
+    display: block;
+  }
+  &__title {
+    margin-top: 15px;
+    text-align: center;
+    color: #9F0013;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

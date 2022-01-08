@@ -1,0 +1,56 @@
+.single {
+  &__comics {
+    display: flex;
+   
+
+    &__img {
+      display: block;
+      width: 293px;
+      height: auto;
+      max-width: 100%;
+    }
+    &__descr {
+      margin-left: 50px;
+      max-width: 550px;
+    }
+    &__title {
+      margin-bottom: 25px;
+      font-size: 22px;
+    }
+    &__descriprion {
+      margin-bottom: 25px;
+      font-size: 18px;
+      line-height: 21px;
+    }
+    &__pages {
+      margin-bottom: 25px;
+      font-size: 18px;
+      span {
+        text-decoration: underline;
+      }
+    }
+    &__prices {
+      margin-bottom: 15px;
+      font-weight: bold;
+      font-size: 24px;
+      color: #9F0013;
+      span {
+        color: #000;
+        font-weight: normal;
+        font-size: 18px;
+      }
+    }
+    &__back-link {
+      text-align: right;
+      flex-grow: 1;
+      font-weight: bold;
+      font-size: 18px;
+      span {
+        &:hover {
+        color: #9F0013;
+        text-decoration: underline;
+        }
+      }
+    }
+  }
+}

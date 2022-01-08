@@ -18,12 +18,12 @@ const CharItem = ({char, selectCharHandler, getRef, i, getActiveFocus}) => {
   const itemRef = useRef(null);
 
   return (
-      <li onClick={() => {selectCharHandler(char?.id); getActiveFocus(i)}}
+      <div onClick={() => {selectCharHandler(char?.id); getActiveFocus(i)}}
           ref={itemRef}
           className="char__item" data-id={char.id}>
           <img src={char.thumbnail} alt="abyss" style={isObjectFit(char?.thumbnail, imageNA1, imageNA2)}/>
           <div className="char__name">{char.name}</div>
-      </li>   
+      </div>   
   )
 }
 

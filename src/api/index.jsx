@@ -17,14 +17,27 @@ export const useMarvelService = () => {
     }
   }
 
-  function transformDataDataFromComics(data) {
-    const {id, thumbnail, title, urls, prices} = data;
+  function transformDataFromComics(data) {
+    const {id, thumbnail, title, prices} = data;
     return {
       id,
       title,
       thumbnail: thumbnail.path + "." + thumbnail.extension,
+      printPrice: prices[0]?.price, 
+      digitalPrice: prices[1]?.price
+    }
+  }
+
+  function transformDataFromSingleComics(data) {
+    const {description, pageCount, prices, thumbnail, title, urls} = data;
+    return {
+      title,
+      description, 
+      pageCount, 
+      printPrice: prices[0]?.price, 
+      digitalPrice: prices[1]?.price, 
       detail: urls[0]?.url,
-      price: prices[0]?.price
+      thumbnail: thumbnail.path + "." + thumbnail.extension
     }
   }
 
@@ -40,11 +53,16 @@ export const useMarvelService = () => {
 
   async function getManyComics(offcet=0, qty=8) { 
     const responce = await fetchURL(`https://gateway.marvel.com:443/v1/public/comics?orderBy=-title&limit=${qty}&offset=${offcet}&${_apiKey}`);
-    return responce.data.results.map(comics => transformDataDataFromComics(comics))
+    return responce.data.results.map(comics => transformDataFromComics(comics));
+  }
+
+  async function getComics(id) {
+    const response = await fetchURL(`https://gateway.marvel.com:443/v1/public/comics/${id}?${_apiKey}`);
+    return transformDataFromSingleComics(response.data.results[0]);
   }
 
 
-  return {getCharacter, getManyCharacters, getManyComics, loading, error, clearError}
+  return {getCharacter, getManyCharacters, getManyComics, getComics, loading, error, clearError}
 }
 
 

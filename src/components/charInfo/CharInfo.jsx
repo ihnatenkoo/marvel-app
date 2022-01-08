@@ -20,13 +20,13 @@ const CharInfo = ({activeChar}) => {
 
 
     const setActiveChar = async () => {
-        clearError()
+        clearError();
         const char = await getCharacter(activeChar);
-        setChar(char)
+        setChar(char);
     }
     
     const spinner =  loading ? <Spinner/> : null;
-    const errorMsg = error ? <Error/> : null;
+    const errorMsg = error ? <Error isReloadPage={true}/> : null;
     const content =  !(loading || error || !char) ? <Content char={char}/> : null;
     const skeleton = !(char || loading || error) ? <Skeleton/> : null;
 
