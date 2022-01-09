@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useMarvelService } from '../../api/index';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import CharItem from '../charItem/CharItem';
@@ -17,16 +17,12 @@ const CharList = (props) => {
     const [char, setChar] = useState([]);
     const [offset, setOffset] = useState(301);  // 1549 max offset
     const [isEnd, setEnd] = useState(false);
-    const [focus, setFocus] = useState(null);
+
+    const [activeChar, setActiveChar] = useState(0);
    
     useEffect(() => {
         getCharacters();
     }, []);
-
-    useEffect(() => {
-        if (focus !== null) focusOnItem(focus);
-    }, [focus]);
-
 
     const getCharacters = async () => {
         clearError();
@@ -37,28 +33,15 @@ const CharList = (props) => {
         setChar(char => charList);
         setOffset(offset => offset + 9);
     }
-
-    const itemRefs = useRef([]);
-  
-    const focusOnItem = (id) => {
-      itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
-      itemRefs.current[id].classList.add('char__item_selected');
-      itemRefs.current[id].focus();
-    }
-
-    const getRef = (el, i) => {
-       itemRefs.current[i] = el.current;
-    }
-
-    const getActiveFocus = (fucusID) => {
-        setFocus(fucusID)
-    }
-
     
     const charList = char.map((char, i) => 
         <CSSTransition key={char.id} timeout={500} classNames="animate">
             <CharItem 
-            selectCharHandler={props.selectCharHandler} char={char} getRef={getRef} i={i} getActiveFocus={getActiveFocus}
+                selectCharHandler={props.selectCharHandler}
+                char={char}
+                i={i}
+                activeChar={activeChar}
+                setActiveChar={setActiveChar}
             />
         </CSSTransition>
     );

@@ -6,7 +6,7 @@ import Spinner from "../spinner/Spinner";
 import Error from "../error/Error";
 
 import classNames from 'classnames';
-import "./ComicsList.scss";
+import "./comicsList.scss";
 import "../../style/animate.scss"
 
 
