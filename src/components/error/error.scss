@@ -5,12 +5,16 @@
     width: auto;
     display: block;
   }
-  &__title {
+  &__link {
     margin-top: 15px;
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
     text-align: center;
     color: #9F0013;
     cursor: pointer;
     &:hover {
+      color: #9F0013;
       text-decoration: underline;
     }
   }

@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
-import { useMarvelService} from '../../api/index';
-import { Link } from 'react-router-dom';
+import { useMarvelService} from '../../hooks/useMarvelService';
+import { Link, useParams } from 'react-router-dom';
 
-import Spinner from '../spinner/Spinner';
-import Error from '../error/Error';
-import './SingleComics.scss';
+import Spinner from '../Spinner/Spinner';
+import Error from '../Error/Error';
+import './singleComics.scss';
 import '../../style/button.scss';
 
-const SingleComics = ({comicsId}) => {
+const SingleComics = () => {
+  const {id} = useParams();
+
   const [comics, setComics] = useState({});
   const {getComics, loading, error, clearError} = useMarvelService();
 
   async function getData() {
     clearError();
-    const data = await getComics(comicsId);
+    const data = await getComics(id);
     setComics(data);
   }
 
@@ -21,17 +23,12 @@ const SingleComics = ({comicsId}) => {
     getData()
   }, [])
 
-  const content = !loading && !error ? <View comics={comics}/> : null;
-  const spinner = loading ? <Spinner/> : null;
-  const errorMsg = error ? <Error isReloadPage="true"/> : null;
-
   return (
     <>
-      {content}
-      {spinner}
-      {errorMsg}
+      { (!loading && !error) && <View comics={comics}/>}
+      { loading && <Spinner/> }
+      { error && <Error isReloadPage="true"/> }
     </>
-
   )
 }
 

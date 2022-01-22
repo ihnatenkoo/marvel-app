@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import {useMarvelService} from '../../api/index';
+import {useMarvelService} from '../../hooks/useMarvelService';
 
-import Spinner from '../spinner/Spinner';
-import Error from '../error/Error';
-import Skeleton from '../skeleton/Skeleton'
+import CharInfoContent from '../CharInfoContent/CharInfoContent';
+import Spinner from '../Spinner/Spinner';
+import Error from '../Error/Error';
+import Skeleton from '../Skeleton/Skeleton'
 import './charInfo.scss';
 
 
@@ -25,58 +26,17 @@ const CharInfo = ({activeChar}) => {
         setChar(char);
     }
     
-    const spinner =  loading ? <Spinner/> : null;
-    const errorMsg = error ? <Error isReloadPage={true}/> : null;
-    const content =  !(loading || error || !char) ? <Content char={char}/> : null;
-    const skeleton = !(char || loading || error) ? <Skeleton/> : null;
+    const content =  !(!char || loading || error) ? <CharInfoContent char={char}/> : null;
+    const skeleton = !( char || loading || error) ? <Skeleton/> : null;
 
     return(
         <div className="char__info">
             {content}
             {skeleton}
-            {spinner}
-            {errorMsg}
+            {loading && <Spinner/>}
+            {error && <Error isReloadPage={true}/>}
         </div>
     )   
-}
-
-const Content = ({char}) => {
-    let {name, description, thumbnail, comics, homepage, wiki} = char;
-
-    const calculateComicsList = (comicsList) => {
-        if (comics.length === 0) return "No comics for this character";
-        return comicsList.map((item,i) => {return (
-            <li className="char__comics-item" key={i}>
-               {item}
-            </li>
-        )})
-    }
-
-    return (
-        <>
-        <div className="char__basics">
-            <img src={thumbnail} alt="abyss"/>
-            <div>
-                <div className="char__info-name">{name}</div>
-                <div className="char__btns">
-                    <a href={homepage} className="button button__main" target="_blank" rel="noreferrer">
-                        <div className="inner">homepage</div>
-                    </a>
-                    <a href={wiki} className="button button__secondary" target="_blank" rel="noreferrer">
-                        <div className="inner">Wiki</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div className="char__descr">
-            {description.length === 0 ? "Description not Available": description}
-        </div>
-        <div className="char__comics">Comics:</div>
-        <ul className="char__comics-list">
-            {calculateComicsList(comics)}
-        </ul>    
-      </> 
-    )
 }
 
 export default CharInfo;

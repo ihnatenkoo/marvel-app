@@ -1,4 +1,4 @@
-import Error from "../error/Error";
+import Error from "../Error/Error";
 import { Link } from "react-router-dom";
 
 const Page404 = () => {

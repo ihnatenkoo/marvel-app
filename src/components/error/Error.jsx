@@ -9,8 +9,8 @@ const Error = ({isReloadPage}) => {
   return (
     <>
       <div className="error">
-        <img src={error} className="error__img" alt="error image" />
-        {isReloadPage ? <h2 onClick={refreshPage} className="error__title">Reload Page</h2> : null}
+        <img src={error} className="error__img" alt="error" />
+        {isReloadPage && <a href="/#" onClick={refreshPage} className="error__link">Reload Page</a>}
       </div>
 
     </>

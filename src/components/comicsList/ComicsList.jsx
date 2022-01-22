@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { useMarvelService } from "../../api";
+import { useMarvelService } from "../../hooks/useMarvelService";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ComicsListItem from "../ComicsListItem/ComicsListItem";
-import Spinner from "../spinner/Spinner";
-import Error from "../error/Error";
+import Spinner from "../Spinner/Spinner";
+import Error from "../Error/Error";
 
 import classNames from 'classnames';
-import "./ComicsList.scss";
+import "./comicsList.scss";
 import "../../style/animate.scss"
 
 
@@ -22,7 +22,7 @@ const ComicsList = () => {
     "hide": isEnd
 })
 
-useEffect(() => {
+useEffect(() => { 
   getComicsList();
 }, [])
 
@@ -41,16 +41,13 @@ useEffect(() => {
     </CSSTransition>
  ); //серв выдает одинаковые id, потмоу key=i
  
- const spinner = loading ? <Spinner/> : null;
- const errorMsg = error ? <Error isReloadPage={true}/> : null
-
   return (
     <div className="comics__content">
-      {errorMsg}
+      {error && <Error isReloadPage={true}/>}
       <TransitionGroup className="comics__list">
         {content}
       </TransitionGroup>
-      {spinner}
+      {loading && <Spinner/>}
       <button onClick={getComicsList} className={btnClass} disabled={loading ? true : null}>
         <div className="inner">load more</div>
       </button>

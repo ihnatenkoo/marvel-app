@@ -1,8 +1,8 @@
-import { useHttp } from "../hooks/http.hook";
+import { useHttp } from "./useHttp";
 
 export const useMarvelService = () => {
   const {loading, error, clearError, fetchURL} = useHttp();
-  const _apiKey = 'apikey=d766f253562e5fc93e2b548ec7741077';
+  const _apiKey = process.env.REACT_APP_API_KEY;
 
   function transformDataFromChar(data) {
     const {id, name, description, thumbnail, urls, comics} = data;
@@ -46,6 +46,11 @@ export const useMarvelService = () => {
     return transformDataFromChar(response.data.results[0]);
   }
 
+  async function getCharacterFromName(name) {
+    const response = await fetchURL(`https://gateway.marvel.com:443/v1/public/characters?name=${name}&${_apiKey}`);
+    return transformDataFromChar(response.data.results[0]);
+  }
+
   async function getManyCharacters(offset=200, qty=9) {
     const responce = await fetchURL(`https://gateway.marvel.com:443/v1/public/characters?offset=${offset}&limit=${qty}&${_apiKey}`);
     return responce.data.results.map(char => transformDataFromChar(char));
@@ -62,7 +67,7 @@ export const useMarvelService = () => {
   }
 
 
-  return {getCharacter, getManyCharacters, getManyComics, getComics, loading, error, clearError}
+  return {getCharacter, getManyCharacters, getManyComics, getComics, getCharacterFromName, loading, error, clearError}
 }
 
 

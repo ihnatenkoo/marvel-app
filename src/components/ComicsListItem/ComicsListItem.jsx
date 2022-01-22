@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./ComicsListItem.scss"
+import "./comicsListItem.scss"
 
 const ComicsListItem = ({comics}) => {
   const {id, title, thumbnail, printPrice, digitalPrice} = comics;

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export const useHttp = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
 
   async function fetchURL(url) {
     setLoading(true);

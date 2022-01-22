@@ -1,6 +1,6 @@
-import { useRef, useEffect } from "react";
+import classNames from "classnames";
 
-const CharItem = ({char, selectCharHandler, getRef, i, getActiveFocus}) => {
+const CharItem = ({char, selectCharHandler, setActiveChar, activeChar}) => {
   const imageNA1 = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
   const imageNA2 = "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708.gif";
 
@@ -11,16 +11,16 @@ const CharItem = ({char, selectCharHandler, getRef, i, getActiveFocus}) => {
       return null;
   }
 
-  useEffect(() => {
-    getRef(itemRef, i)
-  }, [])
-
-  const itemRef = useRef(null);
+  const style = classNames({
+    "char__item":true,
+    "char__item_selected": activeChar === char.id
+  })
 
   return (
-      <div onClick={() => {selectCharHandler(char?.id); getActiveFocus(i)}}
-          ref={itemRef}
-          className="char__item" data-id={char.id}>
+      <div 
+        onClick={() => {selectCharHandler(char?.id); setActiveChar(char?.id)}}
+        className={style}
+        data-id={char.id}>
           <img src={char.thumbnail} alt="abyss" style={isObjectFit(char?.thumbnail, imageNA1, imageNA2)}/>
           <div className="char__name">{char.name}</div>
       </div>   

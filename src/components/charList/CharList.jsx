@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
-import { useMarvelService } from '../../api/index';
+import { useState, useEffect } from 'react';
+import { useMarvelService } from '../../hooks/useMarvelService';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import CharItem from '../charItem/CharItem';
-import Spinner from '../spinner/Spinner';
-import Error from '../error/Error';
+import CharItem from '../CharItem/CharItem';
+import Spinner from '../Spinner/Spinner';
+import Error from '../Error/Error';
 
 import './charList.scss';
 import "../../style/animate.scss";
@@ -17,16 +17,11 @@ const CharList = (props) => {
     const [char, setChar] = useState([]);
     const [offset, setOffset] = useState(301);  // 1549 max offset
     const [isEnd, setEnd] = useState(false);
-    const [focus, setFocus] = useState(null);
+    const [activeChar, setActiveChar] = useState(0);
    
     useEffect(() => {
         getCharacters();
     }, []);
-
-    useEffect(() => {
-        if (focus !== null) focusOnItem(focus);
-    }, [focus]);
-
 
     const getCharacters = async () => {
         clearError();
@@ -38,32 +33,18 @@ const CharList = (props) => {
         setOffset(offset => offset + 9);
     }
 
-    const itemRefs = useRef([]);
-  
-    const focusOnItem = (id) => {
-      itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
-      itemRefs.current[id].classList.add('char__item_selected');
-      itemRefs.current[id].focus();
-    }
-
-    const getRef = (el, i) => {
-       itemRefs.current[i] = el.current;
-    }
-
-    const getActiveFocus = (fucusID) => {
-        setFocus(fucusID)
-    }
-
     
     const charList = char.map((char, i) => 
         <CSSTransition key={char.id} timeout={500} classNames="animate">
             <CharItem 
-            selectCharHandler={props.selectCharHandler} char={char} getRef={getRef} i={i} getActiveFocus={getActiveFocus}
+            selectCharHandler={props.selectCharHandler} 
+            char={char} 
+            setActiveChar={setActiveChar}
+            activeChar={activeChar}
             />
         </CSSTransition>
     );
-    const spinner = loading ? <Spinner/> : null;
-    const errorMsg = error ? <Error/> : null;
+ 
     const content = !(error) ? charList : null;
 
     const btnClass = classNames({
@@ -77,8 +58,8 @@ const CharList = (props) => {
             <TransitionGroup className="char__grid">
                 {content}
             </TransitionGroup>
-            {spinner}
-            {errorMsg}
+            {loading && <Spinner/>}
+            {error && <Error isReloadPage={true}/>}
             <button onClick={getCharacters} className={btnClass} disabled={loading ? true : null}>
                 <div className="inner">load more</div>
             </button>
