@@ -1,40 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useMarvelService } from '../../hooks/useMarvelService';
+import { useDispatch } from 'react-redux'
+import { getRandomChar } from '../../actions';
+
 import RandomCharInfo from '../RandomCharInfo/RandomCharInfo';
 import Spinner from '../Spinner/Spinner';
 import Error from '../Error/Error';
-
 import './randomChar.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
 
-
 const RandomChar = () => {
     const {getCharacter, loading, error, clearError} = useMarvelService();
-
-    const [char, setChar] = useState({
-        name: null,
-        description: "",
-        thumbnail: null,
-        wiki: null,
-        homepage: null
-    });
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        updateCharacter()
+        updateCharacter();
+        //eslint-disable-next-line
     }, [])
 
     const updateCharacter = async () => {
         clearError();
         const id = Math.floor(Math.random() * (1011400-1011000) + 1011000);
         const result = await getCharacter(id);
-        setChar(result);
+        dispatch(getRandomChar(result));
     } 
 
     return (
         <div className="randomchar">
                 { loading && <Spinner/> }
                 { error && <Error/> }
-                { !(loading || error) && <RandomCharInfo char={char}/> }
+                { !(loading || error) && <RandomCharInfo/> }
             <div className="randomchar__static">
                 <p className="randomchar__title">
                     Random character for today!<br/>

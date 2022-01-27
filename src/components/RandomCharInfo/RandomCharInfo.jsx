@@ -1,5 +1,8 @@
-const RandomCharInfo = ({char}) => {
-  let {name, description, thumbnail, wiki, homepage} = char;
+import { useSelector } from 'react-redux';
+
+const RandomCharInfo = () => {
+    const {randomChar} = useSelector(state => state);
+    let {name, description, thumbnail, wiki, homepage} = randomChar;
 
   if (description.length > 211) {
       description = `${description.slice(0,211)}...`
