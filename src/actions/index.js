@@ -24,3 +24,10 @@ export const toggleEndCharacters = (boolean) => {
     payload: boolean
   }
 }
+
+export const setActiveChar = (id) => {
+  return {
+    type: 'SET_ACTIVE_CHAR',
+    payload: id
+  }
+}

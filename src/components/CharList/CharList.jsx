@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useMarvelService } from '../../hooks/useMarvelService';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useSelector, useDispatch } from 'react-redux'
@@ -18,9 +18,6 @@ const CharList = (props) => {
     const {charList, offsetCharacters, isEndOfCharacters} = useSelector(state => state);
     const dispatch = useDispatch();
 
-    const [activeChar, setActiveChar] = useState(0);
-
-   
     useEffect(() => {
         getCharacters();
         //eslint-disable-next-line
@@ -33,21 +30,16 @@ const CharList = (props) => {
         if (data.length < 9) {
             dispatch(toggleEndCharacters(true))
         };
-        const charScroll = [...charList, ...data];
+        const charListScroll = [...charList, ...data];
 
         dispatch(changeOffsetCharacters())
-        dispatch(getCharList(charScroll))
+        dispatch(getCharList(charListScroll))
     }
 
     
     const charContent = charList.map((char, i) => 
         <CSSTransition key={char.id} timeout={500} classNames="animate">
-            <CharItem 
-                selectCharHandler={props.selectCharHandler} 
-                char={char} 
-                setActiveChar={setActiveChar}
-                activeChar={activeChar}
-            />
+            <CharItem char={char} />
         </CSSTransition>
     );
  

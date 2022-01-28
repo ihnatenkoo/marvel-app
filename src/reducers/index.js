@@ -1,5 +1,6 @@
 const initialState = {
   charList: [],
+  activeChar: null,
   offsetCharacters: 301, // 1549 max offset
   isEndOfCharacters: false,
   randomChar: {
@@ -39,6 +40,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isEndOfCharacters: action.payload
+      }
+
+    case 'SET_ACTIVE_CHAR':
+      return {
+        ...state,
+        activeChar: action.payload
       }
     default:
       return state;
