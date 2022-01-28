@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { useMarvelService } from '../../hooks/useMarvelService';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchedChar, resetSearchedChar} from '../../actions/'
 import classNames from 'classnames';
 import './searchPanel.scss'
 
 const SearchPanel = () => {
   const {getCharacterFromName, loading} = useMarvelService();
+  const {searchedChar} = useSelector(state => state)
+  const dispatch = useDispatch();
 
   const [value, setValue] = useState("");
-  const [char, setChar] = useState("");
   const [status, setStatus] = useState("");
 
   const getInputValue = (event) => {
@@ -21,15 +24,16 @@ const SearchPanel = () => {
     if (value.length > 0) {
       try {
         const char = await getCharacterFromName(value);
-        setChar(char)
+        dispatch(setSearchedChar(char))
         setStatus("OK")
       }
       catch {
         setStatus("Not found")
+        dispatch(resetSearchedChar())
       }
-    }
-    else(setStatus('Requaired'))
-    
+    } else {
+      setStatus('Requaired')
+    } 
   }
 
   const classBtn = classNames({
@@ -48,13 +52,16 @@ const SearchPanel = () => {
       break;
     case "OK" :
       results = ( <>
-                    <h3 className='char__found'>There is! Visit <span>{char.name}</span> page?</h3>
+                    <h3 className='char__found'>There is! Visit <span>{searchedChar?.name}</span> page?</h3>
                     <button className="button button__secondary" type="button">
                       <div className="inner">
-                        <Link to={`/char/${char.id}`}>To page</Link>
+                        <Link to={`/char/${searchedChar.id}`}>To page</Link>
                       </div>
                     </button>  
                   </>)
+        break;
+      default: 
+       results = null;
   }
 
   return (

@@ -1,32 +1,13 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useMarvelService } from "../../hooks/useMarvelService";
-import Spinner from "../Spinner/Spinner";
-import Error from "../Error/Error";
+import { useSelector } from "react-redux";
+
 import './singleChar.scss'
 
 const SingleChar = () => {
-  const {id} = useParams();
-  const {getCharacter, loading, error, clearError} = useMarvelService();
+  const {searchedChar} = useSelector(state => state)
 
-  const [char, setChar] = useState('');
+  const {thumbnail, name, description} = searchedChar;
 
-  useEffect(() => {
-    getData()
-  },[id])
-
-  const getData = async () => {
-    clearError();
-    const char = await getCharacter(id);
-    setChar(char)
-  }
-
-  const {thumbnail, name, description} = char;
   return (
-    <>
-      {loading && <Spinner/>}
-      {error && <Error isReloadPage={true}/>}
-      { (!loading && !error) ? (
         <div className="single__char">
           <img className="single__char__img" src={thumbnail} alt="Comics poster"></img>
           <div className="single__char__descr">
@@ -35,9 +16,6 @@ const SingleChar = () => {
           </div>
         </div>
         ) 
-        : null}
-    </>
-  )
 }
 
 export default SingleChar;

@@ -12,6 +12,7 @@ const initialState = {
     homepage: null,
     comics: [],
   },
+  searchedChar: null
   
 
 }
@@ -46,6 +47,18 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeChar: action.payload
+      }
+
+    case 'SET_SEARCHED_CHAR': 
+      return {
+        ...state,
+        searchedChar: action.payload
+      }
+
+    case 'RESET_SEARCHED_CHAR': 
+      return {
+        ...state,
+        searchedChar: null
       }
     default:
       return state;

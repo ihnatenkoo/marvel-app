@@ -31,3 +31,16 @@ export const setActiveChar = (id) => {
     payload: id
   }
 }
+
+export const setSearchedChar = (char) => {
+  return {
+    type: 'SET_SEARCHED_CHAR',
+    payload: char
+  }
+}
+
+export const resetSearchedChar = () => {
+  return {
+    type: 'RESET_SEARCHED_CHAR',
+  }
+}
