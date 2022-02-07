@@ -6,64 +6,62 @@ const initialState = {
   randomChar: {
     id: '',
     name: null,
-    description: "",
+    description: '',
     thumbnail: null,
     wiki: null,
     homepage: null,
-    comics: [],
+    comics: []
   },
-  searchedChar: null
-  
-
-}
+  searchedChar: null,
+  singleChar: {}
+};
 
 const reducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'GET_RANDOM_CHAR':
       return {
         ...state,
         randomChar: action.payload
-      }
+      };
 
     case 'GET_CHAR_LIST':
       return {
         ...state,
         charList: action.payload
-      }
+      };
 
     case 'CHANGE_OFFSET_CHARACTERS':
       return {
         ...state,
         offsetCharacters: state.offsetCharacters + 9
-      }
+      };
 
     case 'TOGGLE_END_CHARATERS':
       return {
         ...state,
         isEndOfCharacters: action.payload
-      }
+      };
 
     case 'SET_ACTIVE_CHAR':
       return {
         ...state,
         activeChar: action.payload
-      }
+      };
 
-    case 'SET_SEARCHED_CHAR': 
+    case 'SET_SEARCHED_CHAR':
       return {
         ...state,
         searchedChar: action.payload
-      }
+      };
 
-    case 'RESET_SEARCHED_CHAR': 
+    case 'SET_SINGLE_CHAR':
       return {
         ...state,
-        searchedChar: null
-      }
+        singleChar: action.payload
+      };
     default:
       return state;
   }
-}
-
+};
 
 export default reducer;
